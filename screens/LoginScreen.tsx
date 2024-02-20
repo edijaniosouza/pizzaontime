@@ -13,40 +13,28 @@ import {useState} from 'react';
 
 // @ts-ignore
 const LoginScreen = ({navigation}) => {
-  const isDarkMode: boolean = useColorScheme() === 'dark';
-  const backgrountStyle = {
-    // backgroundColor: isDarkMode ? Colors.dark : Colors.light,
-    backgroundColor: 'white',
-  };
-
-  const placeHolderColor = 'white';
+  const placeHolderColor = 'grey';
   const [userLogin, setUserLogin] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar
-        hidden={false}
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgrountStyle.backgroundColor}
-      />
-
-      <View style={{flex: 1, justifyContent: 'center'}}>
+      <View style={{flex: 2, justifyContent: 'center'}}>
         <Image
           source={require('../images/logo_pizza_on_time.png')}
           accessibilityLabel={'Logo Pizza on time'}
-          style={{width: 200, height: 200}}
+          style={{width: 300, height: 300}}
         />
       </View>
 
-      <View style={{flex: 2, justifyContent: 'flex-start', marginTop: 70}}>
+      <View style={{flex: 2, justifyContent: 'flex-start' }}>
         <TextInput
           value={userLogin}
           onChangeText={setUserLogin}
           placeholderTextColor={placeHolderColor}
           placeholder={'Insira seu usúario'}
           keyboardType={'default'}
-          style={styles.textInputLayout}
+          style={textInputStyle.textInputLayout}
         />
         <TextInput
           value={userPassword}
@@ -54,35 +42,36 @@ const LoginScreen = ({navigation}) => {
           secureTextEntry={true}
           placeholderTextColor={placeHolderColor}
           placeholder={'Insira sua senha'}
-          style={styles.textInputLayout}
+          style={textInputStyle.textInputLayout}
         />
 
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate('Start');
+              navigation.navigate('Home');
             }}>
             <Text style={styles.buttonText}>ENTRAR</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.button}
+            style={styles.buttonCadastrar}
             onPress={() => {
-              navigation.navigate('Start');
+              navigation.navigate('SignUpScreen');
             }}>
-            <Text style={styles.buttonText}>Cadastrar</Text>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>Cadastrar</Text>
           </TouchableOpacity>
         </View>
 
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => {navigation.navigate('Home')}}
           style={{alignItems: 'center', marginTop: 10}}>
           <Text
             style={{
-              color: 'white',
+              color: 'black',
               textDecorationLine: 'underline',
               fontSize: 16,
+              fontWeight: 'bold',
             }}>
             Entrar sem cadastro
           </Text>
@@ -92,42 +81,47 @@ const LoginScreen = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'black',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: 'white',
-    backgroundColor: 'grey',
-  },
+export const textInputStyle = StyleSheet.create({
   textInputLayout: {
-    color: 'white',
+    color: 'black',
     textAlign: 'left',
+    backgroundColor: '#FFE096',
     width: 300,
     borderStyle: 'solid',
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: '#00000040',
     borderRadius: 5,
     padding: 16,
-    margin: 10,
+    marginBottom: 10,
+  },
+})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFE0965F',
+    alignItems: 'center',
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#FFF',
+    backgroundColor: '#FFE096',
+    paddingHorizontal: 50,
+    paddingVertical: 10,
+    marginTop: 8,
+    borderRadius: 10,
+    elevation: 10,
+  },
+  buttonCadastrar: {
+    alignItems: 'center',
+    backgroundColor: '#C83F3B',
     paddingHorizontal: 30,
     paddingVertical: 10,
     marginTop: 8,
     borderRadius: 10,
     elevation: 10,
-    borderWidth: 1,
-    borderColor: 'black',
   },
   buttonText: {
     color: 'black',
+    fontWeight: 'bold',
   },
 });
 
