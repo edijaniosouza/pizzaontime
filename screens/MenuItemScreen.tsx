@@ -1,15 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {
-  Button,
-  Dimensions,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {RadioButton} from 'react-native-paper';
+import React, { useEffect, useState } from "react";
+import { Button, Dimensions, Image, SafeAreaView, ScrollView, Text } from "react-native";
+import { OptionsItems } from "../components/OptionsItems.tsx";
+import { styleMenuItemScreen } from "../style/style.tsx";
 
 // @ts-ignore
 
@@ -27,7 +19,7 @@ function MenuItemScreen({route, navigation}): React.JSX.Element {
 
   // @ts-ignore
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styleMenuItemScreen.container}>
       <ScrollView>
         <Image
           source={{uri: image}}
@@ -36,8 +28,8 @@ function MenuItemScreen({route, navigation}): React.JSX.Element {
           resizeMethod={'scale'}
         />
 
-        <Text style={styles.text}>{description}</Text>
-        <Text style={styles.textSubtitle}>Sabores</Text>
+        <Text style={styleMenuItemScreen.text}>{description}</Text>
+        <Text style={styleMenuItemScreen.textSubtitle}>Sabores</Text>
 
         <OptionsItems
           value={'first'}
@@ -76,60 +68,5 @@ function MenuItemScreen({route, navigation}): React.JSX.Element {
   );
 }
 
-type OptionsItemsProps = {
-  value: string;
-  checked: string;
-  setChecked: () => any;
-  itemName: string;
-};
-
-function OptionsItems(props: OptionsItemsProps): React.JSX.Element {
-  return (
-    <View style={styles.itemOptions}>
-      <Text style={styles.itemOptionsText}>{props.itemName}</Text>
-      <RadioButton
-        value={props.value}
-        status={props.checked === props.value ? 'checked' : 'unchecked'}
-        onPress={props.setChecked}
-        color={'black'}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  text: {
-    color: 'black',
-    textAlign: 'justify',
-    fontSize: 15,
-    margin: 10,
-  },
-  textSubtitle: {
-    color: '#C83F3B',
-    fontSize: 24,
-    margin: 10,
-    fontWeight: 'bold',
-  },
-  itemOptions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderStyle: 'solid',
-    backgroundColor: '#FFE0965F',
-    borderRadius: 5,
-    marginBottom: 2,
-    marginHorizontal: 5,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-  },
-  itemOptionsText: {
-    color: 'black',
-    fontSize: 16,
-  },
-});
 
 export default MenuItemScreen;
