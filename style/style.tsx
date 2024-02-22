@@ -19,80 +19,80 @@ export const styleHomeScreen = StyleSheet.create({
     height: 80,
     borderRadius: 10,
     borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#FF902C60',
+    borderStyle: "solid",
+    borderColor: "#FF902C60",
     elevation: 5
   },
   btnText: {
     color: "#C83F3B",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 18
   },
   imgStyle: {
     width: 300,
-    height: 300,
+    height: 300
   }
 });
 
 
 export const textInputStyle = StyleSheet.create({
   textInputLayout: {
-    color: 'black',
-    textAlign: 'left',
-    backgroundColor: '#FFE096',
+    color: "black",
+    textAlign: "left",
+    backgroundColor: "#FFE096",
     width: 300,
-    borderStyle: 'solid',
+    borderStyle: "solid",
     borderWidth: 1,
-    borderColor: '#00000040',
+    borderColor: "#00000040",
     borderRadius: 5,
     padding: 16,
-    marginBottom: 10,
-  },
-})
+    marginBottom: 10
+  }
+});
 
 
 export const stylesLoginScreen = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFE0965F',
-    alignItems: 'center',
+    backgroundColor: "#FFE0965F",
+    alignItems: "center"
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: '#FFE096',
+    alignItems: "center",
+    backgroundColor: "#FFE096",
     paddingHorizontal: 50,
     paddingVertical: 10,
     marginTop: 8,
     borderRadius: 10,
-    elevation: 10,
+    elevation: 10
   },
   buttonCadastrar: {
-    alignItems: 'center',
-    backgroundColor: '#C83F3B',
+    alignItems: "center",
+    backgroundColor: "#C83F3B",
     paddingHorizontal: 30,
     paddingVertical: 10,
     marginTop: 8,
     borderRadius: 10,
-    elevation: 10,
+    elevation: 10
   },
   buttonText: {
-    color: 'black',
-    fontWeight: 'bold',
+    color: "black",
+    fontWeight: "bold"
   },
-  buttonTextSignUp:{
+  buttonTextSignUp: {
     color: "white",
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
-  btnSignInWithNoAccount:{
+  btnSignInWithNoAccount: {
     alignItems: "center",
     marginTop: 10
   },
-  btnTextSignInWithNoAccount:{
+  btnTextSignInWithNoAccount: {
     color: "black",
     textDecorationLine: "underline",
     fontSize: 16,
-    fontWeight: "bold",
-  },
+    fontWeight: "bold"
+  }
 });
 
 // Menu Screen
@@ -132,7 +132,7 @@ export const styleMenuScreen = StyleSheet.create({
     marginVertical: 6,
     marginHorizontal: 10,
     fontSize: 25
-  },
+  }
 });
 
 
@@ -167,38 +167,49 @@ export const styleMenuItem = StyleSheet.create({
 });
 
 
-
 export const styleMenuItemScreen = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white"
   },
   text: {
-    color: 'black',
-    textAlign: 'justify',
+    color: "black",
+    textAlign: "justify",
     fontSize: 15,
-    margin: 10,
+    margin: 10
   },
   textSubtitle: {
-    color: '#C83F3B',
+    color: "#C83F3B",
     fontSize: 24,
     margin: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold"
   },
   itemOptions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderStyle: 'solid',
-    backgroundColor: '#FFE0965F',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderStyle: "solid",
+    backgroundColor: "#FFE0965F",
     borderRadius: 5,
     marginBottom: 2,
     marginHorizontal: 5,
     paddingVertical: 15,
-    paddingHorizontal: 30,
+    paddingHorizontal: 30
   },
   itemOptionsText: {
-    color: 'black',
-    fontSize: 16,
+    color: "black",
+    fontSize: 16
   },
+  btnAdd: {
+    backgroundColor: "#C83F3B",
+    margin: 5,
+    padding: 10,
+    borderRadius: 4
+  },
+  btnAddText:{
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'center',
+    elevation: 4}
 });

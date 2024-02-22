@@ -1,13 +1,38 @@
-import { Image, SafeAreaView, Text, TextInput, View } from "react-native";
+import { ActivityIndicator, Alert, Image, SafeAreaView, Text, TextInput, View } from "react-native";
 import { useState } from "react";
 import { stylesLoginScreen, textInputStyle } from "../style/style.tsx";
 import { Button } from "../components/Button.tsx";
+import { supabase } from "../api/Supabase.tsx";
+import { signInWithEmail } from "../api/Auth.tsx";
 
-// @ts-ignore
+export interface Resource{
+  data?: any,
+  error?: any
+}
+//@ts-ignore
 const LoginScreen = ({ navigation }) => {
   const placeHolderColor = "grey";
   const [userLogin, setUserLogin] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<Resource>({})
+  const [error, setError] = useState({})
+
+  console.log(data)
+  async function signUpWithEmail() {
+    setLoading(true);
+    const {
+      data: { session },
+      error
+    } = await supabase.auth.signUp({
+      email: userLogin,
+      password: userPassword
+    });
+
+    if(error) console.log(error.message)
+    if (!session) console.log("E-mail não verificado")
+    setLoading(false)
+  }
 
   return (
     <SafeAreaView style={stylesLoginScreen.container}>
@@ -22,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
       <View style={{ flex: 2, justifyContent: "flex-start" }}>
         <TextInput
           value={userLogin}
-          onChangeText={setUserLogin}
+          onChangeText={ (text) => setUserLogin(text)}
           placeholderTextColor={placeHolderColor}
           placeholder={"Insira seu usúario"}
           keyboardType={"default"}
@@ -30,7 +55,7 @@ const LoginScreen = ({ navigation }) => {
         />
         <TextInput
           value={userPassword}
-          onChangeText={setUserPassword}
+          onChangeText={(password) => setUserPassword(password)}
           secureTextEntry={true}
           placeholderTextColor={placeHolderColor}
           placeholder={"Insira sua senha"}
@@ -42,9 +67,18 @@ const LoginScreen = ({ navigation }) => {
           <Button
             style={stylesLoginScreen.button}
             onPress={() => {
-              navigation.navigate("Home");
+              signInWithEmail(userLogin, userPassword).then((data) =>
+                setData(data)
+              )
+
+              if(data['error']) Alert.alert('Erro de autenticação', data['error']['message'])
+              if(data['data']) navigation.navigate("Home");
+
+              // navigation.navigate("Home");
             }}>
-            <Text style={stylesLoginScreen.buttonText}>Entrar</Text>
+
+            {loading ? <ActivityIndicator color={"#C83F3B"}/> : <Text style={stylesLoginScreen.buttonText}>Entrar</Text> }
+
           </Button>
 
           <Button

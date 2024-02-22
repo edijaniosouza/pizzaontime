@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Divider } from "../components/Divider.tsx";
 
 // @ts-ignore
 function MyAccountScreen({ navigation }): React.JSX.Element {
+  // dados pessoais
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
+  const [birthDate, setBirthDate] = useState("")
+  const [password, setPassword] = useState("")
+  // address
+  const [address, setAddress] = useState("")
+  const [number, setNumber] = useState("")
+  const [cep, setCEP] = useState("")
+  const [neighborhood, setNeighborhood] = useState("")
+  const [city, setCity] = useState("")
+  const [state, setState] = useState("")
+
   return (
     <SafeAreaView style={styles.container}>
 
@@ -11,22 +25,22 @@ function MyAccountScreen({ navigation }): React.JSX.Element {
       <Divider />
       <View style={styles.insideContainer}>
 
-        <Text style={styles.text}>Nome: </Text>
-        <Text style={styles.text}>E-mail: </Text>
-        <Text style={styles.text}>Telefone: </Text>
-        <Text style={styles.text}>Data de nascimento: </Text>
-        <Text style={styles.text}>Senha: </Text>
+        <Text style={styles.text}>Nome: {name} </Text>
+        <Text style={styles.text}>E-mail: {email}</Text>
+        <Text style={styles.text}>Telefone: {phone}</Text>
+        <Text style={styles.text}>Data de nascimento: {birthDate}</Text>
+        <Text style={styles.text}>Senha: {password}</Text>
       </View>
 
       <Text style={styles.subtitle}>Dados de Endereço</Text>
       <Divider />
       <View style={styles.insideContainer}>
-        <Text style={styles.text}>Logradouro: </Text>
-        <Text style={styles.text}>Número: </Text>
-        <Text style={styles.text}>CEP: </Text>
-        <Text style={styles.text}>Bairro: </Text>
-        <Text style={styles.text}>Cidade: </Text>
-        <Text style={styles.text}>Estado: </Text>
+        <Text style={styles.text}>Logradouro: {address}</Text>
+        <Text style={styles.text}>Número: {number}</Text>
+        <Text style={styles.text}>CEP: {cep}</Text>
+        <Text style={styles.text}>Bairro: {neighborhood}</Text>
+        <Text style={styles.text}>Cidade: {city}</Text>
+        <Text style={styles.text}>Estado: {state}</Text>
       </View>
 
     </SafeAreaView>

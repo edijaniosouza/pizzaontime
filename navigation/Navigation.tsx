@@ -9,8 +9,16 @@ import React from "react";
 import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import MyAccountScreen from "../screens/MyAccountScreen.tsx";
 
-
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  Home: undefined,
+  Login: undefined,
+  Menu: undefined,
+  MenuItem: undefined,
+  OrderScreen: undefined,
+  SignUpScreen: undefined,
+  MyAccountScreen: undefined
+}
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function Navigation(){
   return(
@@ -33,7 +41,7 @@ export function Navigation(){
         />
 
         <Stack.Screen
-          name={"Menu_item"}
+          name={"MenuItem"}
           component={MenuItemScreen}
           options={navOptions('Item')}
         />

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Dimensions, Image, SafeAreaView, ScrollView, Text } from "react-native";
+import { Dimensions, Image, SafeAreaView, ScrollView, Text } from "react-native";
 import { OptionsItems } from "../components/OptionsItems.tsx";
 import { styleMenuItemScreen } from "../style/style.tsx";
+import { Button } from "../components/Button.tsx";
 
 // @ts-ignore
 
@@ -62,7 +63,9 @@ function MenuItemScreen({route, navigation}): React.JSX.Element {
           itemName={'Toscana'}
         />
 
-        <Button title={'Adicionar à Sacola'} color={'#C83F3B'} />
+        <Button style={styleMenuItemScreen.btnAdd} onPress={()=>{}} >
+          <Text style={styleMenuItemScreen.btnAddText}>Adicionar à sacola</Text>
+        </Button>
       </ScrollView>
     </SafeAreaView>
   );

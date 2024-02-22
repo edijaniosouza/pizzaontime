@@ -54,7 +54,7 @@ function MenuScreen({ navigation }): React.JSX.Element {
             "Pizza completa, alimenta 4 pessoas DHASOUIDHBASUIOFBADOIUFAHDOIFJASDJHASIODJAIASOIJhbdasnfjianfoisadasdasdasasnfioafnaiodfjasiopdjasoipdjaio aa"
           }
           navigation={() => {
-            navigation.navigate("Menu_item", {
+            navigation.navigate("MenuItem", {
               title: "Pizza 8 pedaços",
               image:
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5ov1z6b_gq6aoF1zVVr0OYA0rJevsw3Z80w&usqp=CAU",
