@@ -1,37 +1,44 @@
 import { ActivityIndicator, Alert, Image, SafeAreaView, Text, TextInput, View } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { stylesLoginScreen, textInputStyle } from "../style/style.tsx";
 import { Button } from "../components/Button.tsx";
 import { supabase } from "../api/Supabase.tsx";
 import { signInWithEmail } from "../api/Auth.tsx";
+import { Session } from "@supabase/supabase-js";
 
-export interface Resource{
+export interface Resource {
   data?: any,
   error?: any
 }
+
 //@ts-ignore
 const LoginScreen = ({ navigation }) => {
   const placeHolderColor = "grey";
   const [userLogin, setUserLogin] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<Resource>({})
-  const [error, setError] = useState({})
 
-  console.log(data)
-  async function signUpWithEmail() {
-    setLoading(true);
-    const {
-      data: { session },
-      error
-    } = await supabase.auth.signUp({
-      email: userLogin,
-      password: userPassword
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if(session) navigation.replace('Home', {
+        userData: session
+      })
     });
+  }, []);
 
-    if(error) console.log(error.message)
-    if (!session) console.log("E-mail não verificado")
-    setLoading(false)
+  function login() {
+    signInWithEmail(userLogin, userPassword).then(data => {
+        if (data["error"]) Alert.alert("Erro de autenticação", data["error"]["message"]);
+        if (data["data"]) navigation.navigate("Home", {
+          userInfo: data["data"]
+        });
+      }
+    ).catch(exception => {
+      console.log("erro: " + exception);
+      Alert.alert("Erro de autenticação", exception);
+    }).finally(() => {
+      setLoading(false);
+    });
   }
 
   return (
@@ -47,7 +54,7 @@ const LoginScreen = ({ navigation }) => {
       <View style={{ flex: 2, justifyContent: "flex-start" }}>
         <TextInput
           value={userLogin}
-          onChangeText={ (text) => setUserLogin(text)}
+          onChangeText={(text) => setUserLogin(text)}
           placeholderTextColor={placeHolderColor}
           placeholder={"Insira seu usúario"}
           keyboardType={"default"}
@@ -67,17 +74,12 @@ const LoginScreen = ({ navigation }) => {
           <Button
             style={stylesLoginScreen.button}
             onPress={() => {
-              signInWithEmail(userLogin, userPassword).then((data) =>
-                setData(data)
-              )
-
-              if(data['error']) Alert.alert('Erro de autenticação', data['error']['message'])
-              if(data['data']) navigation.navigate("Home");
-
-              // navigation.navigate("Home");
+              setLoading(true);
+              login();
             }}>
 
-            {loading ? <ActivityIndicator color={"#C83F3B"}/> : <Text style={stylesLoginScreen.buttonText}>Entrar</Text> }
+            {loading ? <ActivityIndicator color={"#C83F3B"} /> :
+              <Text style={stylesLoginScreen.buttonText}>Entrar</Text>}
 
           </Button>
 

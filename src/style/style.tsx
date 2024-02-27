@@ -114,7 +114,8 @@ export const styleMenuScreen = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#C83F3B",
     borderRadius: 8,
-    elevation: 5
+    elevation: 5,
+    margin: 2,
   },
   menuButtonText: {
     color: "white",
@@ -212,4 +213,28 @@ export const styleMenuItemScreen = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     elevation: 4}
+});
+
+export const stylesMyAccountScreen = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#FFE0965F"
+  },
+  insideContainer: {
+    backgroundColor: "#FFDAD6",
+    margin: 6,
+    borderRadius: 10,
+  },
+  subtitle: {
+    color: "#C83F3B",
+    fontSize: 24,
+    margin: 10,
+    fontWeight: 'bold'
+  },
+  text: {
+    color: "#410003",
+    fontSize: 18,
+    margin: 10,
+    fontWeight: '500',
+  }
 });

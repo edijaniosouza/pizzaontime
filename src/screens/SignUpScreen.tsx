@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, SafeAreaView, StyleSheet, Text, TextInput } from "react-native";
-import { textInputStyle } from "./LoginScreen.tsx";
 import DatePicker from "react-native-date-picker";
+import { textInputStyle } from "../style/style.tsx";
 
 // @ts-ignore
 function SignUpScreen({ navigation }): React.JSX.Element {

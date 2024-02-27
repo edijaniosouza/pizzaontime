@@ -2,10 +2,13 @@ import React from "react";
 import { Image, SafeAreaView, Text, View } from "react-native";
 import { Button } from "../components/Button.tsx";
 import { styleHomeScreen } from "../style/style.tsx";
+import { getCategories } from "../api/ProductsRepository.tsx";
 
 
 // @ts-ignore
-function HomeScreen({ navigation }): React.JSX.Element {
+function HomeScreen({ route, navigation }): React.JSX.Element {
+  const {userData} = route.params // dados do usuario
+
   return (
     <SafeAreaView style={styleHomeScreen.container}>
       <Image
@@ -17,7 +20,9 @@ function HomeScreen({ navigation }): React.JSX.Element {
         <Button
           style={styleHomeScreen.buttonsStyle}
           onPress={() => {
-            navigation.navigate("Menu");
+            navigation.navigate("Menu", {
+              userData: userData
+            });
           }}
         >
           <Text style={styleHomeScreen.btnText}>MENU</Text>
@@ -25,7 +30,9 @@ function HomeScreen({ navigation }): React.JSX.Element {
         <Button
           style={styleHomeScreen.buttonsStyle}
           onPress={() => {
-            navigation.navigate("OrderScreen");
+            navigation.navigate("OrderScreen", {
+              userData: userData
+            });
           }}
         >
           <Text style={styleHomeScreen.btnText}>PEDIDOS</Text>
@@ -33,7 +40,9 @@ function HomeScreen({ navigation }): React.JSX.Element {
         <Button
           style={styleHomeScreen.buttonsStyle}
           onPress={() => {
-            navigation.navigate("MyAccountScreen");
+            navigation.navigate("MyAccountScreen", {
+              userData: userData
+            });
           }}
         >
           <Text style={styleHomeScreen.btnText}>MINHA CONTA</Text>

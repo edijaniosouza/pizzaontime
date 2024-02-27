@@ -5,7 +5,7 @@ import { styleMenuItem } from "../style/style.tsx";
 type MenuItemProps = {
   title: string;
   description?: string;
-  image: ImageSourcePropType;
+  image?: ImageSourcePropType;
   navigation: () => any;
 };
 export function MenuItem(props: MenuItemProps): React.JSX.Element {

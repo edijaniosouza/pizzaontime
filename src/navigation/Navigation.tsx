@@ -5,9 +5,11 @@ import MenuScreen from "../screens/MenuScreen.tsx";
 import MenuItemScreen from "../screens/MenuItemScreen.tsx";
 import OrderScreen from "../screens/OrderScreen.tsx";
 import SignUpScreen from "../screens/SignUpScreen.tsx";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import MyAccountScreen from "../screens/MyAccountScreen.tsx";
+import { Session } from "@supabase/supabase-js";
+import { supabase } from "../api/Supabase.tsx";
 
 export type RootStackParamList = {
   Home: undefined,
@@ -21,6 +23,7 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function Navigation(){
+
   return(
     <NavigationContainer>
       <Stack.Navigator initialRouteName={"Login"}>
@@ -63,7 +66,7 @@ function navOptions(title: string): NativeStackNavigationOptions {
       headerTitleStyle: {
         fontWeight: "bold",
         fontSize: 25
-      }
+      },
     }
   );
 }
