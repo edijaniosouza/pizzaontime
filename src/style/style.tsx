@@ -171,7 +171,8 @@ export const styleMenuItem = StyleSheet.create({
 export const styleMenuItemScreen = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    justifyContent: 'space-between'
   },
   text: {
     color: "black",
@@ -205,7 +206,8 @@ export const styleMenuItemScreen = StyleSheet.create({
     backgroundColor: "#C83F3B",
     margin: 5,
     padding: 10,
-    borderRadius: 4
+    borderRadius: 4,
+    flex: 2
   },
   btnAddText:{
     color: 'white',

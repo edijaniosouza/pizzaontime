@@ -3,13 +3,15 @@ import React, { ReactNode } from "react";
 
 type ButtonsProps = {
   children?: ReactNode,
-  style: StyleProp<any>;
-  onPress: () => void;
+  style?: StyleProp<any>;
+  onPress?: () => void;
+  disable?: boolean;
 };
 
-export const Button: React.FC<ButtonsProps> = ({ children, style, onPress }) =>  {
+export const Button: React.FC<ButtonsProps> = ({ children, style, onPress, disable }) =>  {
   return (
     <TouchableOpacity
+      disabled={disable}
       style={style}
       onPress={onPress}>
       {children && (children)}

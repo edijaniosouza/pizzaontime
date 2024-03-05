@@ -9,21 +9,24 @@ type OptionsItemsProps = {
   checked: string;
   setChecked: () => any;
   itemName: string;
+  price: string;
 };
 
-export const OptionsItems : React.FC<OptionsItemsProps> = ({ value, image, checked, setChecked, itemName }) => {
+export const OptionsItems: React.FC<OptionsItemsProps> = ({ value, image, checked, setChecked, itemName, price }) => {
   return (
     <View style={styleMenuItemScreen.itemOptions}>
-
       {image && (<Image src={image} />)}
 
-      <Text style={styleMenuItemScreen.itemOptionsText}>{itemName}</Text>
       <RadioButton
         value={value}
-        status={checked === value ? 'checked' : 'unchecked'}
+        status={checked === value ? "checked" : "unchecked"}
         onPress={setChecked}
-        color={'black'}
+        color={"black"}
       />
+      <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between'}}>
+        <Text style={styleMenuItemScreen.itemOptionsText}>{itemName}</Text>
+        <Text style={styleMenuItemScreen.itemOptionsText}>R$ {parseFloat(price).toFixed(2)}</Text>
+      </View>
     </View>
   );
-}
+};

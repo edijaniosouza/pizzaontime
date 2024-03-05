@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, SafeAreaView, Text, View } from "react-native";
+import { FlatList, Image, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { Divider } from "../components/Divider.tsx";
 import { Button } from "../components/Button.tsx";
 import { styleMenuScreen } from "../style/style.tsx";
 import { MenuItem } from "../components/Menuitem.tsx";
-import { getCategories, getProducts } from "../api/ProductsRepository.tsx";
+import { Badge } from "react-native-paper";
+import { pizzaData } from "../helpers/dataHelper.tsx";
 
 // @ts-ignore
 function MenuScreen({ navigation }): React.JSX.Element {
-  const [categories, setCategories] = useState<any>([]);
   const [data, setData] = useState<any>([]);
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
   const flatListRef = React.useRef<FlatList>(null);
 
   useEffect(() => {
-    getCategories().then(data => {
-      if (data["error"]) console.warn(data["error"]); else setCategories(data["data"]);
-    });
-    getProducts().then((data) => {
-      if (data["error"]) console.warn(data["error"]); else setData(data["data"]);
+    setData(pizzaData);
+
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => {
+          navigation.navigate("BagScreen");
+        }} style={{ height: 50, width: 50, justifyContent: "center", alignItems: "center" }}>
+          <Badge style={{
+            position: "absolute",
+            top: 4
+          }}>
+            3
+          </Badge>
+          <Image source={require("../images/sacola.png")} style={{ width: 24, height: 24 }} />
+
+        </TouchableOpacity>
+      )
     });
   }, []);
 
@@ -29,9 +41,10 @@ function MenuScreen({ navigation }): React.JSX.Element {
 
   return (
     <SafeAreaView style={styleMenuScreen.container}>
+
       <View style={styleMenuScreen.menuRow}>
         <FlatList
-          data={categories}
+          data={data}
           horizontal={true}
           renderItem={({ item, index }) =>
             <Button
@@ -41,32 +54,34 @@ function MenuScreen({ navigation }): React.JSX.Element {
               <Text style={styleMenuScreen.menuButtonText}>{item.name}</Text>
             </Button>
           }
-          keyExtractor={item => item.id}
         />
       </View>
 
       <FlatList
         ref={flatListRef}
-        data={categories}
+        data={data}
         horizontal={false}
         renderItem={({ item: itemCategory }) =>
           <View>
-            {verificarValor(data, itemCategory.name) ? <TopicTitle name={itemCategory.name} /> : null}
+            {/*{verificarValor(data, itemCategory.name) ? <TopicTitle name={itemCategory.name} /> : null}*/}
+            <TopicTitle name={itemCategory.name} />
 
-            <FlatList data={data} keyExtractor={data.id} renderItem={({ item: item }) =>
-              itemCategory.name === item.categories.name ?
+            <FlatList
+              data={itemCategory.values}
+              keyExtractor={itemCategory.values.id}
+              renderItem={({ item: item }) =>
                 <MenuItem navigation={() => {
-                  navigation.navigate('MenuItem', {
-                    id: item.id,
-                    title: item.name,
-                    description: item.description,
-                    image: require('../images/logo_pizza_on_time.png'),
-                  })
-                }} title={item.name} description={item.description} image={require("../images/logo_pizza_on_time.png")} /> : null
-            } />
+                  navigation.navigate("MenuItem", {
+                    item: item
+                  });
+                }}
+                          title={item.name}
+                          description={item.description}
+                          image={item.image}
+                          price={item.value} />
+              } />
           </View>
         }
-        keyExtractor={item => item.id}
       />
 
     </SafeAreaView>

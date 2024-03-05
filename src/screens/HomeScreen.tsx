@@ -7,7 +7,7 @@ import { getCategories } from "../api/ProductsRepository.tsx";
 
 // @ts-ignore
 function HomeScreen({ route, navigation }): React.JSX.Element {
-  const {userData} = route.params // dados do usuario
+  const {userData} = route.params
 
   return (
     <SafeAreaView style={styleHomeScreen.container}>

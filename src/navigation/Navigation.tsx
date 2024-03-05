@@ -5,11 +5,11 @@ import MenuScreen from "../screens/MenuScreen.tsx";
 import MenuItemScreen from "../screens/MenuItemScreen.tsx";
 import OrderScreen from "../screens/OrderScreen.tsx";
 import SignUpScreen from "../screens/SignUpScreen.tsx";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import MyAccountScreen from "../screens/MyAccountScreen.tsx";
-import { Session } from "@supabase/supabase-js";
-import { supabase } from "../api/Supabase.tsx";
+import BagScreen from "../screens/BagScreen.tsx";
+import PaymentScreen from "../screens/PaymentScreen.tsx";
 
 export type RootStackParamList = {
   Home: undefined,
@@ -18,12 +18,13 @@ export type RootStackParamList = {
   MenuItem: undefined,
   OrderScreen: undefined,
   SignUpScreen: undefined,
-  MyAccountScreen: undefined
+  MyAccountScreen: undefined,
+  BagScreen: undefined,
+  PaymentScreen: undefined,
 }
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function Navigation(){
-
   return(
     <NavigationContainer>
       <Stack.Navigator initialRouteName={"Login"}>
@@ -40,7 +41,18 @@ export function Navigation(){
         <Stack.Screen
           name={"Menu"}
           component={MenuScreen}
-          options={navOptions('Menu')}
+          options={{
+            title: 'Menu',
+            headerStyle: {
+              backgroundColor: "#FFE096"
+            },
+            headerTintColor: "black",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              fontSize: 25
+            },
+
+          }}
         />
 
         <Stack.Screen
@@ -51,6 +63,8 @@ export function Navigation(){
         <Stack.Screen name={"OrderScreen"} component={OrderScreen} options={navOptions('Pedidos')} />
         <Stack.Screen name={"SignUpScreen"} component={SignUpScreen} options={navOptions('Cadastrar')} />
         <Stack.Screen name={'MyAccountScreen'} component={MyAccountScreen} options={navOptions('Minha Conta')}/>
+        <Stack.Screen name={'BagScreen'} component={BagScreen} options={navOptions('Pedido')}/>
+        <Stack.Screen name={'PaymentScreen'} component={PaymentScreen} options={navOptions('Forma de Pagamento')}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

@@ -5,8 +5,9 @@ import { styleMenuItem } from "../style/style.tsx";
 type MenuItemProps = {
   title: string;
   description?: string;
-  image?: ImageSourcePropType;
+  image?: string;
   navigation: () => any;
+  price?: string
 };
 export function MenuItem(props: MenuItemProps): React.JSX.Element {
   return (
@@ -20,7 +21,8 @@ export function MenuItem(props: MenuItemProps): React.JSX.Element {
           {props.description}{" "}
         </Text>
       </View>
-      <Image source={props.image} style={styleMenuItem.image} />
+
+      <Image source={{ uri: props.image }} style={styleMenuItem.image} />
     </TouchableOpacity>
   );
 }
