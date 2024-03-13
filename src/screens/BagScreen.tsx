@@ -1,89 +1,183 @@
-import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  ImageURISource,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { Divider } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { bagList } from "../helpers/dataHelper.tsx";
+import { BagItemCard } from "../components/BagItemCard.tsx";
+
 
 // @ts-ignore
 function BagScreen({ route, navigation }): React.JSX.Element {
+  const [total, setTotal] = useState<any>(0);
+  const totalList: any = [];
+  const [bagList2, setBag] = useState<any>([]);
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Text style={bagScreenStyle.headerClean}>Limpar</Text>
+        <Text onPress={() => {
+          setBag([]);
+          bagList.pop();
+        }} style={bagScreenStyle.headerClean}>Limpar</Text>
       )
     });
   }, [route]);
 
+  useEffect(() => {
+    console.log(bagList)
+    setBag(bagList);
+  }, [bagList]);
+
+
+  useEffect(() => {
+    const initialValue = 0;
+    const sum = totalList.reduce(
+      (accumulator: number, currentValue: number) => accumulator + currentValue, initialValue
+    );
+    setTotal(sum.toFixed(2));
+  }, [totalList]);
 
   return (
     <SafeAreaView style={bagScreenStyle.container}>
+      {
+        bagList2.length !== 0 ?
+          <View style={{ flex: 1, padding: 10 }}>
 
-      <View style={{ padding: 10 }}>
+            {/*<Text style={bagScreenStyle.subtitle}>Itens adicionados</Text>*/}
+            {/*<Divider bold={true} style={{ backgroundColor: "#000" }} />*/}
 
-        <Text style={bagScreenStyle.subtitle}>Itens adicionados</Text>
-        <Divider bold={true} style={{ backgroundColor: "#000" }} />
+            <FlatList
+              data={bagList2}
+              style={{ flex: 1 }}
+              renderItem={({ item: product, index: index }) =>
+                // inicio da lista -- //TODO: Refatorar componente com código abaixo
 
-        <TouchableOpacity style={bagScreenStyle.card}>
-          <Image style={bagScreenStyle.cardImage} source={require("../images/logo_pizza_on_time.png")} />
-          <View style={bagScreenStyle.cardTextContainer}>
-            <Text style={bagScreenStyle.cardTextItemName}>
-              Pizza 8 pedaços
-            </Text>
-            <Text style={bagScreenStyle.cardTextItemFlavor}>
-              Calabresa
-            </Text>
-            <Text style={bagScreenStyle.cardTextItemPrice}>
-              R$ 40,99
-            </Text>
+                <BagItemCard productInTheBag={
+                  {
+                    image: {uri: product.item.image },
+                    name: product.item.name,
+                    flavor: product.itemFlavor.name,
+                    price: product.itemFlavor.price,
+                    quantity: product.quantity
+                  }
+                } />
+
+                //   export type ProductInTheBag = {
+                //   image: ImageURISource,
+                //   name: string,
+                //   flavor: string,
+                //   price: number,
+                //   quantity: number,
+                // }
+                // fim da lista
+              }
+              ListHeaderComponent={
+                <View>
+                  <Text style={bagScreenStyle.subtitle}>Itens adicionados</Text>
+                  <Divider bold={true} style={{ backgroundColor: "#000" }} />
+                </View>
+              }
+              contentContainerStyle={{ flexGrow: 1 }}
+              ListFooterComponentStyle={{ flex: 1 }}
+              ListFooterComponent={
+                <View style={{ flex: 1, justifyContent: "space-between" }}>
+                  <View>
+                    <Text style={bagScreenStyle.moreProductsText} onPress={() => {
+                      navigation.navigate("Menu");
+                    }}>Adicionar mais produtos</Text>
+                    <Text style={bagScreenStyle.subtitle}>Entrega</Text>
+
+                    <View style={bagScreenStyle.deliveryContainer}>
+                      <View>
+                        {/*<Text style={bagScreenStyle.deliveryPlaceName}>Casa</Text>*/}
+                        <Text style={bagScreenStyle.deliveryText}>Avenida Escola Politécnica, 2200 - Apto 53F</Text>
+                        <Text style={bagScreenStyle.deliveryText}>Rio Pequeno, São Paulo - SP </Text>
+                      </View>
+
+                      <AntDesign name={"edit"} style={{ color: "black", fontSize: 32 }} />
+                    </View>
+                  </View>
+
+                  <View style={bagScreenStyle.priceInfoContainer}>
+                    <View style={bagScreenStyle.priceInfoTextContainer}>
+                      <Text style={bagScreenStyle.priceInfotext}>Produtos</Text>
+                      <Text style={bagScreenStyle.priceInfotext}>R$ {total}</Text>
+                    </View>
+                    <View style={bagScreenStyle.priceInfoTextContainer}>
+                      <Text style={bagScreenStyle.priceInfotext}>Taxa de entrega</Text>
+                      <Text style={bagScreenStyle.priceInfotext}>R$ 9,00</Text>
+                    </View>
+                    <View style={bagScreenStyle.priceInfoTextContainer}>
+                      <Text style={bagScreenStyle.priceInfoTextTotal}>Total a pagar</Text>
+                      <Text style={bagScreenStyle.priceInfoTextTotal}>R$ {parseFloat(total) + 9}</Text>
+                    </View>
+
+                    <TouchableOpacity style={bagScreenStyle.btnContainer} onPress={() => {
+                      navigation.navigate("PaymentScreen");
+                    }}>
+                      <Text style={bagScreenStyle.btnText}>SELECIONAR FORMA DE PAGAMENTO</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                </View>
+              }
+            />
+
+
+            {/*<Text style={bagScreenStyle.moreProductsText} onPress={() => {*/}
+            {/*  navigation.navigate("Menu");*/}
+            {/*}}>Adicionar mais produtos</Text>*/}
+            {/*<Text style={bagScreenStyle.subtitle}>Entrega</Text>*/}
+
+            {/*<View style={bagScreenStyle.deliveryContainer}>*/}
+            {/*  <View>*/}
+            {/*    /!*<Text style={bagScreenStyle.deliveryPlaceName}>Casa</Text>*!/*/}
+            {/*    <Text style={bagScreenStyle.deliveryText}>Avenida Escola Politécnica, 2200 - Apto 53F</Text>*/}
+            {/*    <Text style={bagScreenStyle.deliveryText}>Rio Pequeno, São Paulo - SP </Text>*/}
+            {/*  </View>*/}
+
+            {/*  <AntDesign name={"edit"} style={{ color: "black", fontSize: 32 }} />*/}
+            {/*</View>*/}
+
+            {/*</View>*/}
+
+            {/*<View style={bagScreenStyle.priceInfoContainer}>*/}
+            {/*  <View style={bagScreenStyle.priceInfoTextContainer}>*/}
+            {/*    <Text style={bagScreenStyle.priceInfotext}>Produtos</Text>*/}
+            {/*    <Text style={bagScreenStyle.priceInfotext}>R$ {total}</Text>*/}
+            {/*  </View>*/}
+            {/*  <View style={bagScreenStyle.priceInfoTextContainer}>*/}
+            {/*    <Text style={bagScreenStyle.priceInfotext}>Taxa de entrega</Text>*/}
+            {/*    <Text style={bagScreenStyle.priceInfotext}>R$ 9,00</Text>*/}
+            {/*  </View>*/}
+            {/*  <View style={bagScreenStyle.priceInfoTextContainer}>*/}
+            {/*    <Text style={bagScreenStyle.priceInfoTextTotal}>Total a pagar</Text>*/}
+            {/*    <Text style={bagScreenStyle.priceInfoTextTotal}>R$ {parseFloat(total) + 9}</Text>*/}
+            {/*  </View>*/}
+
+            {/*  <TouchableOpacity style={bagScreenStyle.btnContainer} onPress={() => {*/}
+            {/*    navigation.navigate("PaymentScreen");*/}
+            {/*  }}>*/}
+            {/*    <Text style={bagScreenStyle.btnText}>SELECIONAR FORMA DE PAGAMENTO</Text>*/}
+            {/*  </TouchableOpacity>*/}
+          </View> :
+          <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+            <Text style={{ color: "#000" }}> Ainda não há produtos em seu carrinho</Text>
+            <Text style={bagScreenStyle.moreProductsText} onPress={() => {
+              navigation.navigate("Menu");
+            }}>Adicionar produtos</Text>
           </View>
-
-          <View style={bagScreenStyle.cardQuantityContainer}>
-            <TouchableOpacity style={bagScreenStyle.cardQuantityTextContainer}>
-              <Text style={bagScreenStyle.cardQuantityText}>+</Text>
-            </TouchableOpacity>
-            <Text style={bagScreenStyle.cardQuantityText}>1</Text>
-            <TouchableOpacity style={bagScreenStyle.cardQuantityTextContainer}>
-              <Text style={bagScreenStyle.cardQuantityText}>-</Text>
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
-
-        <Text style={bagScreenStyle.moreProductsText} onPress={() => {
-          navigation.navigate("Menu");
-        }}>Adicionar mais produtos</Text>
-        <Text style={bagScreenStyle.subtitle}>Entrega</Text>
-
-        <View style={bagScreenStyle.deliveryContainer}>
-          <View>
-            {/*<Text style={bagScreenStyle.deliveryPlaceName}>Casa</Text>*/}
-            <Text style={bagScreenStyle.deliveryText}>Avenida Escola Politécnica, 2200 - Apto 53F</Text>
-            <Text style={bagScreenStyle.deliveryText}>Rio Pequeno, São Paulo - SP </Text>
-          </View>
-
-          <AntDesign name={"edit"} style={{ color: "black", fontSize: 32 }} />
-        </View>
-
-      </View>
-      <View style={bagScreenStyle.priceInfoContainer}>
-        <View style={bagScreenStyle.priceInfoTextContainer}>
-          <Text style={bagScreenStyle.priceInfotext}>Produtos</Text>
-          <Text style={bagScreenStyle.priceInfotext}>R$ 81,00</Text>
-        </View>
-        <View style={bagScreenStyle.priceInfoTextContainer}>
-          <Text style={bagScreenStyle.priceInfotext}>Taxa de entrega</Text>
-          <Text style={bagScreenStyle.priceInfotext}>R$ 9,00</Text>
-        </View>
-        <View style={bagScreenStyle.priceInfoTextContainer}>
-          <Text style={bagScreenStyle.priceInfoTextTotal}>Total a pagar</Text>
-          <Text style={bagScreenStyle.priceInfoTextTotal}>R$ 90,00</Text>
-        </View>
-
-        <TouchableOpacity style={bagScreenStyle.btnContainer} onPress={() => {
-          navigation.navigate("PaymentScreen");
-        }}>
-          <Text style={bagScreenStyle.btnText}>SELECIONAR FORMA DE PAGAMENTO</Text>
-        </TouchableOpacity>
-      </View>
-
+      }
     </SafeAreaView>
   );
 }
@@ -92,7 +186,7 @@ const bagScreenStyle = StyleSheet.create({
   container: {
     backgroundColor: "#FFE0965F",
     flex: 1,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   headerClean: {
     color: "#C83F3B"
@@ -100,48 +194,6 @@ const bagScreenStyle = StyleSheet.create({
   subtitle: {
     color: "#C83F3B",
     fontSize: 24
-  },
-  card: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#C83F3B",
-    marginVertical: 10,
-    height: 100,
-    borderRadius: 10,
-    elevation: 1
-  },
-  cardImage: {
-    flex: 2,
-    aspectRatio: 1,
-    marginHorizontal: 10
-  },
-  cardTextContainer: {
-    flex: 5
-  },
-  cardTextItemName: {
-    color: "#FFF",
-    fontWeight: "bold"
-  },
-  cardTextItemFlavor: {
-    color: "#FFF"
-  },
-  cardTextItemPrice: {
-    color: "#FFF",
-    fontWeight: "500"
-  },
-  cardQuantityContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  cardQuantityTextContainer: {
-    aspectRatio: 1, alignItems: "center", backgroundColor: "rgba(255,255,255,0.25)"
-  },
-  cardQuantityText: {
-    fontWeight: "bold",
-    color: "#FFF",
-    fontSize: 16,
-    margin: 2
   },
   moreProductsText: {
     fontSize: 15,

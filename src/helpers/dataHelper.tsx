@@ -7,7 +7,7 @@ export const pizzaData = [
         "name": "Pizza 8 pedaços",
         "description": "Pizza 4 pedaços, serve até 4 pessoas",
         "image": "https://img.freepik.com/fotos-premium/apetitosa-pizza-de-queijo-cortada-em-pedacos_321388-9.jpg",
-        "flavors": [{ id: 1, "name": "Mussarela", "price": 49.00 }, { id: 2, "name": "Calabresa", "price": 45.00 }]
+        "flavors": [{ id: 1, "name": "Mussarela", "price": 49.29 }, { id: 2, "name": "Calabresa", "price": 45.00 }]
       },
       {
         "id": 2,
@@ -73,5 +73,13 @@ export const pizzaData = [
     ]
   }];
 
+export const bagList: any = []
 
-
+const STATUS = ["Aguardando confirmação", "Pedido confirmado", "Em preparação", "Motoboy a caminho", "Entregue"]
+const pedido = {
+  id: 0,
+  datetime: '17/02/2024 - 15:00',
+  product: {},
+  valor: 15.00,
+  status: STATUS[0]
+}

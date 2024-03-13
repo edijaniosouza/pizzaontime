@@ -2,7 +2,6 @@ import React from "react";
 import { Image, SafeAreaView, Text, View } from "react-native";
 import { Button } from "../components/Button.tsx";
 import { styleHomeScreen } from "../style/style.tsx";
-import { getCategories } from "../api/ProductsRepository.tsx";
 
 
 // @ts-ignore

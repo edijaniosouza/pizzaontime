@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, FlatList, Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Alert, Dimensions, FlatList, Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { OptionsItems } from "../components/OptionsItems.tsx";
 import { styleMenuItemScreen } from "../style/style.tsx";
 import { Button } from "../components/Button.tsx";
+import { bagList } from "../helpers/dataHelper.tsx";
 
 // @ts-ignore
 function MenuItemScreen({ route, navigation }): React.JSX.Element {
@@ -63,11 +64,18 @@ function MenuItemScreen({ route, navigation }): React.JSX.Element {
         </View>
 
         <Button style={styleMenuItemScreen.btnAdd} onPress={() => {
-          navigation.navigate("BagScreen",{
-            item: item,
-            itemFlavorId: checked,
-            quantity: quantity
-          })
+          if (checked !== "") {
+            const flavor = item.flavors[parseInt(checked) - 1];
+            bagList.push({
+              item: item,
+              itemFlavor: flavor,
+              quantity: quantity
+            });
+            navigation.navigate("BagScreen")
+          }
+          else {
+            Alert.alert("Por favor, escolha uma das opções.")
+          }
         }}>
           <Text style={styleMenuItemScreen.btnAddText}>Adicionar pedido</Text>
         </Button>
