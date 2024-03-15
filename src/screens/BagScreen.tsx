@@ -12,29 +12,28 @@ import {
 import { Divider } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { bagList } from "../helpers/dataHelper.tsx";
+import { ProductInTheBag, bagList } from "../helpers/dataHelper.tsx";
 import { BagItemCard } from "../components/BagItemCard.tsx";
 
 
-// @ts-ignore
-function BagScreen({ route, navigation }): React.JSX.Element {
+
+function BagScreen({ route, navigation }: any): React.JSX.Element {
   const [total, setTotal] = useState<any>(0);
   const totalList: any = [];
-  const [bagList2, setBag] = useState<any>([]);
+  const [bagListLocal, setBag] = useState<ProductInTheBag[]>([]);
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <Text onPress={() => {
           setBag([]);
-          bagList.pop();
+          bagList.splice(0, bagList.length);
         }} style={bagScreenStyle.headerClean}>Limpar</Text>
       )
     });
   }, [route]);
 
   useEffect(() => {
-    console.log(bagList)
     setBag(bagList);
   }, [bagList]);
 
@@ -50,36 +49,24 @@ function BagScreen({ route, navigation }): React.JSX.Element {
   return (
     <SafeAreaView style={bagScreenStyle.container}>
       {
-        bagList2.length !== 0 ?
+        bagListLocal.length !== 0 ?
           <View style={{ flex: 1, padding: 10 }}>
 
-            {/*<Text style={bagScreenStyle.subtitle}>Itens adicionados</Text>*/}
-            {/*<Divider bold={true} style={{ backgroundColor: "#000" }} />*/}
-
             <FlatList
-              data={bagList2}
+              data={bagListLocal}
               style={{ flex: 1 }}
               renderItem={({ item: product, index: index }) =>
-                // inicio da lista -- //TODO: Refatorar componente com código abaixo
-
-                <BagItemCard productInTheBag={
-                  {
-                    image: {uri: product.item.image },
-                    name: product.item.name,
-                    flavor: product.itemFlavor.name,
-                    price: product.itemFlavor.price,
-                    quantity: product.quantity
-                  }
-                } />
-
-                //   export type ProductInTheBag = {
-                //   image: ImageURISource,
-                //   name: string,
-                //   flavor: string,
-                //   price: number,
-                //   quantity: number,
-                // }
-                // fim da lista
+                <BagItemCard
+                  productInTheBag={
+                    {
+                      // @ts-ignore
+                      image: { uri: product.image },
+                      name: product.name,
+                      flavor: product.flavor,
+                      price: product.price,
+                      quantity: product.quantity
+                    }
+                  } />
               }
               ListHeaderComponent={
                 <View>
@@ -99,7 +86,6 @@ function BagScreen({ route, navigation }): React.JSX.Element {
 
                     <View style={bagScreenStyle.deliveryContainer}>
                       <View>
-                        {/*<Text style={bagScreenStyle.deliveryPlaceName}>Casa</Text>*/}
                         <Text style={bagScreenStyle.deliveryText}>Avenida Escola Politécnica, 2200 - Apto 53F</Text>
                         <Text style={bagScreenStyle.deliveryText}>Rio Pequeno, São Paulo - SP </Text>
                       </View>
@@ -132,44 +118,6 @@ function BagScreen({ route, navigation }): React.JSX.Element {
                 </View>
               }
             />
-
-
-            {/*<Text style={bagScreenStyle.moreProductsText} onPress={() => {*/}
-            {/*  navigation.navigate("Menu");*/}
-            {/*}}>Adicionar mais produtos</Text>*/}
-            {/*<Text style={bagScreenStyle.subtitle}>Entrega</Text>*/}
-
-            {/*<View style={bagScreenStyle.deliveryContainer}>*/}
-            {/*  <View>*/}
-            {/*    /!*<Text style={bagScreenStyle.deliveryPlaceName}>Casa</Text>*!/*/}
-            {/*    <Text style={bagScreenStyle.deliveryText}>Avenida Escola Politécnica, 2200 - Apto 53F</Text>*/}
-            {/*    <Text style={bagScreenStyle.deliveryText}>Rio Pequeno, São Paulo - SP </Text>*/}
-            {/*  </View>*/}
-
-            {/*  <AntDesign name={"edit"} style={{ color: "black", fontSize: 32 }} />*/}
-            {/*</View>*/}
-
-            {/*</View>*/}
-
-            {/*<View style={bagScreenStyle.priceInfoContainer}>*/}
-            {/*  <View style={bagScreenStyle.priceInfoTextContainer}>*/}
-            {/*    <Text style={bagScreenStyle.priceInfotext}>Produtos</Text>*/}
-            {/*    <Text style={bagScreenStyle.priceInfotext}>R$ {total}</Text>*/}
-            {/*  </View>*/}
-            {/*  <View style={bagScreenStyle.priceInfoTextContainer}>*/}
-            {/*    <Text style={bagScreenStyle.priceInfotext}>Taxa de entrega</Text>*/}
-            {/*    <Text style={bagScreenStyle.priceInfotext}>R$ 9,00</Text>*/}
-            {/*  </View>*/}
-            {/*  <View style={bagScreenStyle.priceInfoTextContainer}>*/}
-            {/*    <Text style={bagScreenStyle.priceInfoTextTotal}>Total a pagar</Text>*/}
-            {/*    <Text style={bagScreenStyle.priceInfoTextTotal}>R$ {parseFloat(total) + 9}</Text>*/}
-            {/*  </View>*/}
-
-            {/*  <TouchableOpacity style={bagScreenStyle.btnContainer} onPress={() => {*/}
-            {/*    navigation.navigate("PaymentScreen");*/}
-            {/*  }}>*/}
-            {/*    <Text style={bagScreenStyle.btnText}>SELECIONAR FORMA DE PAGAMENTO</Text>*/}
-            {/*  </TouchableOpacity>*/}
           </View> :
           <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
             <Text style={{ color: "#000" }}> Ainda não há produtos em seu carrinho</Text>

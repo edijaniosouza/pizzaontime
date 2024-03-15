@@ -1,30 +1,97 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { OrderCard } from "../components/OrderCard.tsx";
+import { STATUS, bagList, productIntheOrder } from "../helpers/dataHelper.tsx";
 
 function OrderScreen(): React.JSX.Element {
+  const [order, setOrder] = useState<productIntheOrder>()
+
+  const randomNumber: () => string = () => {
+    return (Math.random() * 10).toFixed(0)
+  }
+  useEffect(() => {
+
+    /*
+      const sum = totalList.reduce(
+      (accumulator: number, currentValue: number) => accumulator + currentValue, initialValue
+    );
+    */
+
+    // const da : []= bagList.map((productInTheBag) => ({
+    //   value: productInTheBag.price
+    // }))
+
+    // const initialValue = 0
+    // const a = da.reduce(
+    //   (accumulator: number, currentValue: number) => accumulator + currentValue, initialValue
+    //   )
+
+
+    if (bagList.length != 0) {
+      const a = bagList
+      const newOrder = {
+        "productList": a,
+        "status": STATUS[0],
+        "orderId": randomNumber(),
+        "date": "13/01/24",
+        "time": "18:03",
+        "priceTotal": 15,
+      }
+      setOrder(newOrder)
+
+      // bagList.splice(0, bagList.length)
+    }
+
+  }, [])
+
+
+
   return (
     <SafeAreaView style={styles.container}>
-      <OrderCard orderNumer={"002"}
-                 order={"Pizza de frango"}
-                 orderStatus={"Em preparação"}
-                 dateTime={"19/02 - 11:03"}
-                 cardStyle={styles.cardInProgress}
-                 cardTitleRowStyle={styles.cardTitleRow}
-                 cardTitleStyle={styles.cardContentTitleInProgress}
-                 cardtextStyle={styles.cardContentInProgress}
-      />
+      {
+        order ?
+          <OrderCard
+            orderData={order}
+          />
+          : <View></View>
+      }
+
       <Text style={styles.textTopic}>Histórico</Text>
       <View style={styles.divider}></View>
 
-      <OrderCard orderNumer={"001"}
-                 order={"Pizza de Mussarela"}
-                 orderStatus={"CONCLUIDO"}
-                 dateTime={"17/02 - 21:10"}
-                 cardStyle={styles.cardHistory}
-                 cardTitleRowStyle={styles.cardTitleRow}
-                 cardTitleStyle={styles.cardContentTitle}
-                 cardtextStyle={styles.cardContent} />
+      {    /*
+    export type productIntheOrder = {
+      productList: ProductInTheBag[],
+      status: string,
+      orderId: number,
+      dateTime: string,
+    }
+
+    --- 
+
+      image?: ImageURISource,
+      name: string,
+      flavor: string,
+      price?: number,
+      quantity: number,
+    */}
+
+      <OrderCard
+        orderData={{
+          productList: [{
+            name: "Pizza 8 pedaços",
+            flavor: "Mussarela",
+            quantity: 1,
+            image: {uri: ""},
+            price: 43
+          }],
+          status: STATUS[4],
+          orderId: "84",
+          date: "13/02/23",
+          time: "19:03",
+          priceTotal: 49.29
+        }}
+      />
     </SafeAreaView>
   );
 }

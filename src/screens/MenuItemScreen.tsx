@@ -66,9 +66,12 @@ function MenuItemScreen({ route, navigation }): React.JSX.Element {
         <Button style={styleMenuItemScreen.btnAdd} onPress={() => {
           if (checked !== "") {
             const flavor = item.flavors[parseInt(checked) - 1];
+            console.log("ITEM: ", item, "FLAVOR", flavor)
             bagList.push({
-              item: item,
-              itemFlavor: flavor,
+              image: item.image,
+              name: item.name,
+              flavor: flavor.name,
+              price: flavor.price,
               quantity: quantity
             });
             navigation.navigate("BagScreen")

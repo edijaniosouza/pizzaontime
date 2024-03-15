@@ -16,6 +16,8 @@ export default function PaymentScreen({ navigation }): React.JSX.Element {
     else setSelected(text);
   };
 
+  const finishBuy = "FINALIZAR COMPRA"
+
   return (
     <SafeAreaView style={styles.container}>
 
@@ -69,8 +71,7 @@ export default function PaymentScreen({ navigation }): React.JSX.Element {
           <Button
             style={[styles.btnFinish, styles.btnFinishDisable]} disable={true}
             >
-            <Text style={[styles.btnFinishText, styles.btnFinishTextDisable]}>FINALIZAR
-              COMPRA</Text>
+            <Text style={[styles.btnFinishText, styles.btnFinishTextDisable]}>{finishBuy}</Text>
           </Button>
           :
           <Button
@@ -79,7 +80,7 @@ export default function PaymentScreen({ navigation }): React.JSX.Element {
               if (selected === money && moneyChange === "") return console.warn("Por favor, insira o valor do troco");
               return navigation.navigate("OrderScreen");
             }}>
-            <Text style={styles.btnFinishText}>FINALIZAR COMPRA</Text>
+            <Text style={styles.btnFinishText}>{finishBuy}</Text>
           </Button>
       }
     </SafeAreaView>

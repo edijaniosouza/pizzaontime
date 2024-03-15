@@ -1,3 +1,5 @@
+import { ImageURISource } from "react-native";
+
 export const pizzaData = [
   {
     name: "Pizza Grande",
@@ -73,9 +75,27 @@ export const pizzaData = [
     ]
   }];
 
-export const bagList: any = []
+export type ProductInTheBag = {
+  image: ImageURISource,
+  name: string,
+  flavor: string,
+  price: number,
+  quantity: number,
+}
+export const bagList: ProductInTheBag[] = []
 
-const STATUS = ["Aguardando confirmação", "Pedido confirmado", "Em preparação", "Motoboy a caminho", "Entregue"]
+export type productIntheOrder = {
+  productList: ProductInTheBag[],
+  priceTotal: number,
+  status: string,
+  orderId: string,
+  date: string,
+  time: string,
+}
+
+export const OrderList: ProductInTheBag[] = []
+
+export const STATUS = ["Aguardando confirmação", "Pedido confirmado", "Em preparação", "Motoboy a caminho", "Entregue"]
 const pedido = {
   id: 0,
   datetime: '17/02/2024 - 15:00',

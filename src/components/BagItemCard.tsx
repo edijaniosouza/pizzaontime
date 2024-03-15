@@ -1,21 +1,16 @@
 import { Image, ImageSourcePropType, ImageURISource, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+import { ProductInTheBag } from "../helpers/dataHelper.tsx";
 
 type BagItemCardProps = {
   productInTheBag: ProductInTheBag,
 }
 
-type ProductInTheBag = {
-  image: ImageURISource,
-  name: string,
-  flavor: string,
-  price: number,
-  quantity: number,
-}
 const calculatePrice = (itemPrice: number, quantity: number) => {
   const result = quantity * itemPrice;
   return result.toFixed(2);
 };
+
 export const BagItemCard: React.FC<BagItemCardProps> = ({ productInTheBag }) => {
   return (
     <View>
@@ -52,7 +47,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#C83F3B",
-    marginVertical: 10,
+    marginVertical: 5,
     height: 100,
     borderRadius: 10,
     elevation: 1
